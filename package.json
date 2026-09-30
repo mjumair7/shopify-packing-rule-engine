@@ -1,0 +1,13 @@
+{
+  "name": "shopify-packing-rule-engine",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "analyze": "node src/packing-console.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

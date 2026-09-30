@@ -1,0 +1,4 @@
+sku,title,length_cm,width_cm,height_cm
+BOOK-POCKET,"Pocket Book",18,11,1.8
+BOOK-HARDCOVER,"Hardcover Book",24,17,3.2
+BOOK-LARGE,"Large-format Book",31,24,2.4

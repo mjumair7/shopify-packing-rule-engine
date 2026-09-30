@@ -1,0 +1,25 @@
+[
+  {
+    "id": 1048,
+    "gift": false,
+    "items": [
+      { "sku": "BOOK-POCKET", "quantity": 2 }
+    ]
+  },
+  {
+    "id": 1052,
+    "gift": true,
+    "gift_message": "Wishing you well",
+    "items": [
+      { "sku": "BOOK-HARDCOVER", "quantity": 1 },
+      { "sku": "BOOK-POCKET", "quantity": 1 }
+    ]
+  },
+  {
+    "id": 1061,
+    "gift": false,
+    "items": [
+      { "sku": "BOOK-HARDCOVER", "quantity": 5 }
+    ]
+  }
+]

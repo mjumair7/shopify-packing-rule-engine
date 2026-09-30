@@ -1,0 +1,26 @@
+[
+  {
+    "name": "gift-order",
+    "when": { "gift": true },
+    "package": "Gift Box G1",
+    "steps": ["Add insert", "Wrap items", "Seal box"]
+  },
+  {
+    "name": "bulk-books",
+    "when": { "min_items": 5 },
+    "package": "Carton B3",
+    "steps": ["Stack books", "Add corner pads", "Print label"]
+  },
+  {
+    "name": "standard-mailer",
+    "when": { "max_items": 4, "max_volume_cm3": 7000, "max_longest_side_cm": 28 },
+    "package": "Mailer M2",
+    "steps": ["Wrap books", "Add bookmark", "Print label"]
+  },
+  {
+    "name": "large-item-fallback",
+    "when": {},
+    "package": "Carton B3",
+    "steps": ["Add protective fill", "Check movement", "Print label"]
+  }
+]
