@@ -32,9 +32,15 @@ export function analyzeOrder(order, products, rules) {
   if (!order?.id || !Array.isArray(order.items) || order.items.length === 0) {
     throw new Error("Order must include an id and at least one item");
   }
+  if (!Array.isArray(products) || !Array.isArray(rules)) {
+    throw new Error("Products and rules must be arrays");
+  }
   const facts = orderFacts(order, products);
   const rule = rules.find((candidate) => matches(candidate, facts));
   if (!rule) throw new Error(`No packaging rule matched order ${order.id}`);
+  if (!rule.package || !Array.isArray(rule.steps)) {
+    throw new Error(`Packaging rule for order ${order.id} is incomplete`);
+  }
 
   const steps = [...rule.steps];
   if (order.gift_message) steps.splice(Math.max(0, steps.length - 1), 0, "Add greeting card");

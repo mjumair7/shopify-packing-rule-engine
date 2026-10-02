@@ -23,6 +23,9 @@ function parseCsvLine(line) {
 }
 
 export function parseCsv(source) {
+  if (typeof source !== "string" || !source.trim()) {
+    throw new Error("Product CSV is empty");
+  }
   const lines = source.trim().split(/\r?\n/).filter(Boolean);
   const headers = parseCsvLine(lines.shift());
   return lines.map((line) => Object.fromEntries(headers.map((header, index) => [header, parseCsvLine(line)[index]])));
@@ -34,11 +37,18 @@ export async function loadJson(path) {
 
 export async function loadProducts(path) {
   const rows = parseCsv(await readFile(path, "utf8"));
-  return rows.map((row) => ({
-    sku: row.sku,
-    title: row.title,
-    lengthCm: Number(row.length_cm),
-    widthCm: Number(row.width_cm),
-    heightCm: Number(row.height_cm),
-  }));
+  return rows.map((row, index) => {
+    const product = {
+      sku: row.sku,
+      title: row.title,
+      lengthCm: Number(row.length_cm),
+      widthCm: Number(row.width_cm),
+      heightCm: Number(row.height_cm),
+    };
+    const dimensions = [product.lengthCm, product.widthCm, product.heightCm];
+    if (!product.sku || dimensions.some((value) => !Number.isFinite(value) || value <= 0)) {
+      throw new Error(`Invalid product data on CSV row ${index + 2}`);
+    }
+    return product;
+  });
 }
