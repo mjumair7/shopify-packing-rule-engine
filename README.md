@@ -2,19 +2,9 @@
 
 [![CI](https://github.com/mjumair7/shopify-packing-rule-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/mjumair7/shopify-packing-rule-engine/actions/workflows/ci.yml)
 
-A small Node.js rule engine I built around a common fulfillment problem: packaging decisions often live in somebody's head, even when the order and product data already contain enough information to make the decision consistently.
+This repo is a small packing-rules experiment. Give it one of the sample order numbers and it returns a package code plus a short packing checklist.
 
-The project reads Shopify-style orders, joins each line to a product-dimension catalog, calculates a few useful facts, and applies the first matching packing rule. It is deliberately a command-line prototype rather than a fake Shopify integration.
-
-```mermaid
-flowchart LR
-    O[Order JSON] --> J[Join by SKU]
-    C[Product CSV] --> J
-    J --> F[Item count / volume / longest side]
-    R[Ordered rules] --> M[First matching rule]
-    F --> M
-    M --> I[Package code + packing steps]
-```
+The rules stay in JSON instead of being buried in the command-line code. “Shopify-style” only describes the fixture shape: this does not connect to a store or call Shopify's API.
 
 ## Run it
 
@@ -35,6 +25,14 @@ PACKAGE Mailer M2
 Wrap books · Add bookmark · Print label
 ITEMS 2 / VOLUME 1188 cm³
 ```
+
+## Three fixtures, three paths
+
+- `1048` is a normal two-book order and uses the standard mailer.
+- `1052` is marked as a gift, so the gift rule wins even though the item count is small.
+- `1061` contains five hardcovers and uses the bulk-book carton.
+
+These cases make rule order visible without needing an external service or a large test dataset.
 
 ## Data flow
 
@@ -57,7 +55,7 @@ src/packing-console.js    command-line interface
 tests/                    decision and failure-path tests
 ```
 
-## What this is not
+## Where I stopped
 
 This is not a Shopify app and it does not call the Shopify API. The fixtures stand in for exported data so the decision logic stays easy to run and test. A real integration would add authenticated API ingestion, order-status updates, audit logging, and a review path for orders that match no rule.
 
